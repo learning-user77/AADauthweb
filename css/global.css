@@ -6,42 +6,48 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    font-family: 'JetBrains Mono', 'Segoe UI', monospace;
+    background: #0b0b12;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 90% 80%, rgba(176, 38, 255, 0.03) 0%, transparent 50%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
+    color: #ccd6f6;
 }
 
-/* --- Navigation --- */
+/* --- Cyber Navigation --- */
 nav {
     width: 100%;
     max-width: 1200px;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(11, 11, 18, 0.9);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 15px 30px;
     border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(0, 240, 255, 0.15);
 }
 
 nav a {
     text-decoration: none;
-    color: #333;
+    color: #8892b0;
     font-weight: 600;
     margin-right: 20px;
-    transition: color 0.3s ease;
+    transition: all 0.3s ease;
+    letter-spacing: 1px;
 }
 
 nav a:hover {
-    color: #4a6cf7;
+    color: #00f0ff;
+    text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
 }
 
 #nav-right {
@@ -50,50 +56,46 @@ nav a:hover {
     gap: 10px;
 }
 
-/* Style for the Logout button inside nav */
+/* Logout Button Cyber Style */
 #nav-right button {
-    background: #ff4757;
-    border: none;
-    color: white;
+    background: transparent;
+    border: 1px solid #ff2d95;
+    color: #ff2d95;
     padding: 8px 20px;
     border-radius: 50px;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
     cursor: pointer;
-    transition: background 0.3s ease;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 #nav-right button:hover {
-    background: #c0392b;
+    background: #ff2d95;
+    color: #0b0b12;
+    box-shadow: 0 0 30px rgba(255, 45, 149, 0.3);
 }
 
-/* --- Main Content Container --- */
-h1 {
-    color: #2d3436;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+/* --- Utility --- */
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
 }
 
-p {
-    color: #636e72;
-    font-size: 1.1rem;
-    max-width: 600px;
-    text-align: center;
-    line-height: 1.6;
-}
-
-/* --- Utility classes used by JS --- */
 .error-message {
-    background: #fee2e2;
-    color: #b91c1c;
+    background: rgba(255, 45, 149, 0.1);
+    color: #ff2d95;
     padding: 10px;
     border-radius: 8px;
     margin: 10px 0;
     font-size: 0.9rem;
-    display: none; /* Hidden by default, shown by JS */
-    border-left: 4px solid #b91c1c;
+    display: none;
+    border-left: 4px solid #ff2d95;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-/* --- Responsive --- */
+/* Responsive */
 @media (max-width: 600px) {
     nav {
         flex-direction: column;
@@ -103,8 +105,5 @@ p {
     #nav-right {
         flex-wrap: wrap;
         width: 100%;
-    }
-    h1 {
-        font-size: 1.8rem;
     }
 }
