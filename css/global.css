@@ -1,0 +1,110 @@
+/* --- Reset & Base --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* --- Navigation --- */
+nav {
+    width: 100%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    margin-right: 20px;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #4a6cf7;
+}
+
+#nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Style for the Logout button inside nav */
+#nav-right button {
+    background: #ff4757;
+    border: none;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#nav-right button:hover {
+    background: #c0392b;
+}
+
+/* --- Main Content Container --- */
+h1 {
+    color: #2d3436;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #636e72;
+    font-size: 1.1rem;
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* --- Utility classes used by JS --- */
+.error-message {
+    background: #fee2e2;
+    color: #b91c1c;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    display: none; /* Hidden by default, shown by JS */
+    border-left: 4px solid #b91c1c;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    #nav-right {
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+}
