@@ -3,25 +3,394 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | Auth Demo</title>
+    <title>Home | Cyber Auth</title>
     <link rel="stylesheet" href="css/global.css">
+    <!-- Import Cyberpunk Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CYBER EXPLAINER SPECIFIC STYLES --- */
+        .hero-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .hero-section h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00f0ff, #b026ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0, 240, 255, 0.3);
+            letter-spacing: 4px;
+        }
+        .hero-section .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: #8892b0;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* The Interactive Flow Container */
+        .explainer-container {
+            background: rgba(11, 11, 18, 0.8);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            border-radius: 24px;
+            padding: 40px;
+            margin-top: 40px;
+            max-width: 1000px;
+            width: 100%;
+            box-shadow: 0 0 60px rgba(0, 240, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        /* The Diagram (Horizontal Flow) */
+        .flow-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .flow-node {
+            flex: 1;
+            min-width: 120px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid #1a1a2e;
+            border-radius: 16px;
+            padding: 20px 10px;
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #495670;
+            letter-spacing: 1px;
+        }
+
+        .flow-node .icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .flow-arrow {
+            font-size: 2rem;
+            color: #1a1a2e;
+            transition: all 0.5s ease;
+            font-weight: 900;
+            padding: 0 5px;
+        }
+
+        /* Active/Highlighted States */
+        .flow-node.active {
+            border-color: #00f0ff;
+            background: rgba(0, 240, 255, 0.1);
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+            color: #00f0ff;
+            transform: scale(1.05);
+        }
+        .flow-node.done {
+            border-color: #b026ff;
+            background: rgba(176, 38, 255, 0.1);
+            color: #b026ff;
+            box-shadow: 0 0 20px rgba(176, 38, 255, 0.1);
+        }
+        .flow-arrow.active-arrow {
+            color: #00f0ff;
+            text-shadow: 0 0 20px #00f0ff;
+        }
+        .flow-arrow.done-arrow {
+            color: #b026ff;
+        }
+
+        /* The Info Panel (Bottom half) */
+        .info-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .step-description {
+            font-family: 'JetBrains Mono', monospace;
+            color: #ccd6f6;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            min-height: 80px;
+        }
+        .step-description strong {
+            color: #00f0ff;
+            font-weight: 600;
+        }
+        .step-description .highlight-pink {
+            color: #ff2d95;
+        }
+
+        /* System Log (Fake Terminal) */
+        .system-log {
+            background: #0a0a0f;
+            border-radius: 8px;
+            padding: 15px 20px;
+            border-left: 4px solid #00f0ff;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #64ffda;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            word-break: break-word;
+        }
+        .system-log .cursor-blink {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background: #00f0ff;
+            margin-left: 8px;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .step-indicator {
+            font-family: 'Orbitron', sans-serif;
+            color: #495670;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+        .btn-cyber {
+            background: transparent;
+            border: 2px solid #00f0ff;
+            color: #00f0ff;
+            padding: 12px 40px;
+            border-radius: 8px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .btn-cyber:hover {
+            background: #00f0ff;
+            color: #0a0a0f;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.4);
+        }
+        .btn-cyber:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            filter: grayscale(1);
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .flow-diagram {
+                flex-direction: column;
+            }
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+            .hero-section h1 {
+                font-size: 1.8rem;
+            }
+            .explainer-container {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation will be dynamically controlled by session.js -->
+    <!-- Navigation -->
     <nav id="main-nav">
-        <a href="index.html">Home</a>
+        <a href="index.html" style="font-family:'Orbitron',sans-serif; font-weight:900; color:#00f0ff;">[ SYS::AUTH ]</a>
         <div id="nav-right">
-            <!-- These will be toggled via JS -->
             <a href="login.html" id="nav-login">Login</a>
             <a href="signup.html" id="nav-signup">Signup</a>
             <a href="dashboard.html" id="nav-dashboard" style="display:none;">Dashboard</a>
             <button id="logout-btn" style="display:none;">Logout</button>
         </div>
     </nav>
-    <h1>Welcome to the Auth Demo</h1>
-    <p>This page is public.</p>
 
-    <!-- We use module scripts -->
+    <!-- Hero / Main Content -->
+    <div class="hero-section">
+        <h1>// AUTHENTICATION PROTOCOL</h1>
+        <p class="subtitle">[ Interactive Explaination of the Login System ]</p>
+    </div>
+
+    <!-- Explainer Container -->
+    <div class="explainer-container">
+        <!-- Flow Diagram -->
+        <div class="flow-diagram" id="flowDiagram">
+            <div class="flow-node" id="step1Node">
+                <span class="icon">🔐</span>
+                Login Request
+            </div>
+            <div class="flow-arrow" id="arrow1">➜</div>
+            
+            <div class="flow-node" id="step2Node">
+                <span class="icon">⚡</span>
+                Token Exchange
+            </div>
+            <div class="flow-arrow" id="arrow2">➜</div>
+            
+            <div class="flow-node" id="step3Node">
+                <span class="icon">✅</span>
+                Access Granted
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="step-description" id="stepDescription">
+                💡 <strong>Welcome!</strong> Click <strong class="highlight-pink">"Next Step"</strong> below to see how the login system works from start to finish.
+            </div>
+            
+            <div class="system-log" id="systemLog">
+                <span id="logMessage">> System ready. Awaiting user interaction...</span>
+                <span class="cursor-blink"></span>
+            </div>
+
+            <div class="controls">
+                <span class="step-indicator" id="stepIndicator">STEP 0 / 3</span>
+                <button class="btn-cyber" id="nextStepBtn">▶ NEXT STEP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script type="module" src="js/app.js"></script>
+    <!-- Inline script for the Explainer (runs independently) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Explainer Logic ---
+            const steps = [
+                {
+                    node: 'step1Node',
+                    arrows: [],
+                    description: `
+                        <strong>Step 1: Login Request</strong><br>
+                        The user enters their <strong>Email</strong> and <strong>Password</strong> into the form and clicks "Login". 
+                        The browser securely sends these credentials to <strong>Firebase Authentication</strong> via the <span class="highlight-pink">logInUser()</span> function.
+                    `,
+                    log: '> [AUTH] Receiving credentials... Validating format...'
+                },
+                {
+                    node: 'step2Node',
+                    arrows: ['arrow1'],
+                    description: `
+                        <strong>Step 2: Token Exchange (JWT)</strong><br>
+                        Firebase verifies the credentials. If correct, Firebase generates a unique <strong>JSON Web Token (JWT)</strong>.
+                        This token acts like a digital "key card" for the user. It contains their User ID and expires in 1 hour.
+                    `,
+                    log: '> [FIREBASE] Credentials accepted. Generating JWT access token...'
+                },
+                {
+                    node: 'step3Node',
+                    arrows: ['arrow1', 'arrow2'],
+                    description: `
+                        <strong>Step 3: Access Granted</strong><br>
+                        The JWT token is stored locally. The <span class="highlight-pink">onAuthStateChanged()</span> listener detects the new session.
+                        The user is automatically redirected to the <strong>Dashboard</strong> and the navigation bar updates to show "Logout".
+                    `,
+                    log: '> [SESSION] Token verified. User authenticated. Redirecting to /dashboard... ACCESS GRANTED.'
+                }
+            ];
+
+            let currentStep = -1; // Start before step 0
+            const nextBtn = document.getElementById('nextStepBtn');
+            const stepIndicator = document.getElementById('stepIndicator');
+            const descriptionEl = document.getElementById('stepDescription');
+            const logEl = document.getElementById('logMessage');
+
+            function resetStyles() {
+                document.querySelectorAll('.flow-node').forEach(el => {
+                    el.classList.remove('active', 'done');
+                });
+                document.querySelectorAll('.flow-arrow').forEach(el => {
+                    el.classList.remove('active-arrow', 'done-arrow');
+                });
+            }
+
+            function updateUI(stepIndex) {
+                resetStyles();
+
+                if (stepIndex < 0) {
+                    // Initial state
+                    stepIndicator.textContent = `STEP 0 / ${steps.length}`;
+                    descriptionEl.innerHTML = `💡 <strong>Welcome!</strong> Click <strong class="highlight-pink">"Next Step"</strong> below to see how the login system works from start to finish.`;
+                    logEl.textContent = '> System ready. Awaiting user interaction...';
+                    nextBtn.textContent = '▶ NEXT STEP';
+                    return;
+                }
+
+                // Mark current as active
+                const currentStepData = steps[stepIndex];
+                const currentNode = document.getElementById(currentStepData.node);
+                if (currentNode) currentNode.classList.add('active');
+
+                // Mark previous steps as done (if any)
+                for (let i = 0; i < stepIndex; i++) {
+                    const prevNode = document.getElementById(steps[i].node);
+                    if (prevNode) prevNode.classList.add('done');
+                    // Arrows for previous
+                    steps[i].arrows.forEach(arrowId => {
+                        const arrow = document.getElementById(arrowId);
+                        if (arrow) arrow.classList.add('done-arrow');
+                    });
+                }
+
+                // Highlight arrows for current step
+                currentStepData.arrows.forEach(arrowId => {
+                    const arrow = document.getElementById(arrowId);
+                    if (arrow) arrow.classList.add('active-arrow');
+                });
+
+                // Update Text
+                stepIndicator.textContent = `STEP ${stepIndex + 1} / ${steps.length}`;
+                descriptionEl.innerHTML = currentStepData.description;
+                logEl.textContent = currentStepData.log;
+
+                // Update Button
+                if (stepIndex === steps.length - 1) {
+                    nextBtn.textContent = '⟳ RESTART';
+                } else {
+                    nextBtn.textContent = '▶ NEXT STEP';
+                }
+            }
+
+            nextBtn.addEventListener('click', () => {
+                // If restart
+                if (currentStep === steps.length - 1) {
+                    currentStep = -1;
+                    updateUI(-1);
+                    return;
+                }
+                
+                // Increment step
+                currentStep++;
+                updateUI(currentStep);
+            });
+
+            // Initialize UI
+            updateUI(-1);
+        });
+    </script>
 </body>
 </html>
