@@ -13,7 +13,7 @@ import { auth } from "../config/firebase.js";
 // Helper to translate Firebase error codes into clean UI messages
 function getErrorMessage(errorCode) {
     switch (errorCode) {
-        case 'auth/user-not-found': return 'No account found with this email.';
+         case 'auth/user-not-found': return 'No account found with this email.';
         case 'auth/wrong-password': return 'Incorrect password. Please try again.';
         case 'auth/email-already-in-use': return 'An account already exists with this email.';
         case 'auth/weak-password': return 'Password should be at least 6 characters.';
@@ -21,6 +21,10 @@ function getErrorMessage(errorCode) {
         case 'auth/network-request-failed': return 'Network error. Check your internet connection.';
         case 'auth/popup-closed-by-user': return 'Google sign-in was cancelled.';
         case 'auth/account-exists-with-different-credential': return 'An account already exists with the same email but a different sign-in method.';
+        
+        // 🆕 ADD THIS CASE:
+        case 'auth/unauthorized-domain': return 'This domain is not authorized for Google sign-in. Please contact the site owner.';
+        
         default: return 'An unexpected error occurred. Please try again.';
     }
 }
